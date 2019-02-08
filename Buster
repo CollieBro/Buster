@@ -39,7 +39,7 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
       { name: 'Southampton', position: 16},
       { name: 'Tottenham', position: 3},
       { name: 'Watford', position: 8},
-	  { name: 'West Ham', position: 12},
+      { name: 'West Ham', position: 12},
       { name: 'Wolves', position: 7}
   ];
   
