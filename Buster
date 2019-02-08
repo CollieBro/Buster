@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Buster 2.0.04</title>
+</head>
+<body>
+  <p><em>Welcome to the Javascript port of Buster! Watch this space.</em>
+  <br />   <br />
+<form action="">
+Who is the home team? <input type="text" class="team" autocomplete="off" onchange="definehome()" value="" name="hometeam" id="hometeam"><br>
+Who is the away team? <input type="text" class="team" autocomplete="off" onchange="defineaway()" value="" style="margin-left: .1em;" name="awayteam" id="awayteam">
+</form></p>
+<button onclick="calibrate()">Who wins?</button>
+  <br />
+  <p id="display result"></p> <script> //to be implemented </script>
+<script>
+  var home = '';
+  var away = '';
+  var premteams = ["Arsenal","Bournemouth","Brighton","Burnley","Cardiff","Chelsea","Crystal Palace","Everton","Fulham","Huddersfield","Leicester","Liverpool","Manchester City","Manchester United","Newcastle","Southampton","Tottenham","Watford","West Ham","Wolves"];
+  const premteamdata = 
+  [
+      { name: 'Arsenal', position: 6},
+      { name: 'Bournemouth', position: 10},
+      { name: 'Brighton', position: 13},
+      { name: 'Burnley', position: 17},
+      { name: 'Cardiff', position: 18},
+      { name: 'Chelsea', position: 4},
+      { name: 'Crystal Palace', position: 14},
+      { name: 'Everton', position: 9},
+      { name: 'Fulham', position: 19},
+      { name: 'Huddersfield', position: 20},
+      { name: 'Leicester', position: 11},
+      { name: 'Liverpool', position: 1},
+      { name: 'Manchester City', position: 2},
+      { name: 'Manchester United', position: 5},
+      { name: 'Newcastle', position: 15},
+      { name: 'Southampton', position: 16},
+      { name: 'Tottenham', position: 3},
+      { name: 'Watford', position: 8},
+	  { name: 'West Ham', position: 12},
+      { name: 'Wolves', position: 7}
+  ];
+  
+  function definehome()
+  {
+    home = document.getElementById("hometeam").value;
+	console.log(home);
+  }
+  
+  function defineaway()
+  {
+    away = document.getElementById("awayteam").value;
+	console.log(away);
+  }
+  
+  function calibrate()
+  {
+	if ( home == null || home == "" || away == null || away == "")
+   {
+      alert("You forgot to add the teams!");
+      return false;
+   }
+   if (home >= 0 || away >= 0)
+   {
+	  return calculateprem(home,away); //so I can skip adding the names and just use their positions on the table if I want
+   }
+   homeposition = premteamdata.find(homeposition => homeposition.name === home); //this takes the name and adds the position (and later other things)
+   awayposition = premteamdata.find(awayposition => awayposition.name === away);
+   var homerank = homeposition.position;
+   var awayrank = awayposition.position;
+   console.log(homeposition);
+   console.log(awayposition);
+   return calculateprem(homerank,awayrank);
+  }
+  
+  function calculateprem(homerank,awayrank)
+  {
+    if (homerank <= 0 || awayrank <= 0 || homerank >= 20 || away >= 20)
+	{
+	  alert("This is impossible for a Premier League game!");
+      return false;
+	}
+	var homestrength = (((awayrank - homerank) + 20) / 4); //takes the position and compares it to the other team's position, this gives us the actual strength
+	var awaystrength = (((homerank - awayrank) + 20) / 4);
+	homestrength = Math.ceil(homestrength);
+	awaystrength = Math.ceil(awaystrength);
+	console.log(homestrength);
+	console.log(awaystrength);
+	var homescore = randomise(homestrength);
+	var awayscore = randomise(awaystrength);
+	alert(homescore + " - " + awayscore);
+  }
+	
+ function randomise(teamstrength)
+ {
+	var rand = function(min, max) {
+    return Math.random() * (max - min) + min;
+	};
+ 
+	var getRandomItem = function(goals, probability) {
+    var total_probability = probability.reduce(function (prev, cur, i, arr) {
+        return prev + cur;
+    });
+     
+    var random_num = rand(0, total_probability);
+    var probability_sum = 0;
+     
+    for (var i = 0; i < goals.length; i++) {
+        probability_sum += probability[i];
+        probability_sum = +probability_sum.toFixed(2);
+         
+        if (random_num <= probability_sum) {
+            return goals[i];
+        }
+    }
+	};
+var goals = [0,1,2,3,4,5,6,7,8,9];
+switch(teamstrength){
+    case 1 : var probability = [0.75,0.15,0.06,0.02,0.01, 0.006,0.002, 0.0015,0.005]; break;
+    case 2 : var probability = [0.61,0.22,0.13,0.02,0.01, 0.004,0.0035,0.0015,0.001]; break;
+    case 3 : var probability = [0.5, 0.24,0.14,0.07,0.02, 0.01, 0.005, 0.0035,0.0015]; break;
+    case 4 : var probability = [0.42,0.25,0.19,0.08,0.03, 0.02, 0.005, 0.0035,0.0015]; break;
+    case 5 : var probability = [0.35,0.3, 0.22,0.08,0.025,0.015,0.005, 0.0035,0.0015]; break;
+    case 6 : var probability = [0.3, 0.34,0.2, 0.08,0.04, 0.02, 0.01,  0.0075,0.0025]; break;
+    case 7 : var probability = [0.28,0.23,0.21,0.16,0.06, 0.03, 0.015, 0.01,  0.005]; break;
+    case 8 : var probability = [0.23,0.21,0.24,0.18,0.08, 0.03, 0.015, 0.01,  0.005]; break;
+    case 9 : var probability = [0.16,0.2, 0.25,0.22,0.11, 0.03, 0.015, 0.01,  0.005]; break;
+    case 10 : var probability = [0.1,0.17,0.22,0.25,0.18, 0.04, 0.025, 0.01,  0.005]; break;
+    default : // teamstrength was not 1-10
+}
+var outgoingscore = getRandomItem(goals, probability);
+ 
+return(outgoingscore);
+  }
+</script>
+</body>
+</html>
