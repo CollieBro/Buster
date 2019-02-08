@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Buster 2.0.04</title>
+  <title>Buster 2.1.01</title>
 </head>
 <body>
   <p><em>Welcome to the Javascript port of Buster! Watch this space.</em>
@@ -39,8 +39,35 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
       { name: 'Southampton', position: 16},
       { name: 'Tottenham', position: 3},
       { name: 'Watford', position: 8},
-      { name: 'West Ham', position: 12},
+	  { name: 'West Ham', position: 12},
       { name: 'Wolves', position: 7}
+  ];
+  const champteamdata =
+  [
+	  { name: 'Aston Villa', position: 9},
+      { name: 'Birmingham', position: 8},
+      { name: 'Blackburn', position: 11},
+      { name: 'Bolton', position: 23},
+	  { name: 'Brentford', position: 17},
+      { name: 'Bristol City', position: 6},
+      { name: 'Derby', position: 7},
+      { name: 'Hull', position: 10},
+      { name: 'Ipswich', position: 24},
+      { name: 'Leeds', position: 2},
+      { name: 'Middlesbrough', position: 5},
+      { name: 'Millwall', position: 20},
+	  { name: 'Norwich', position: 1},
+      { name: 'Nottingham Forest', position: 12},
+      { name: 'Preston', position: 18},
+      { name: 'QPR', position: 14},
+      { name: 'Reading', position: 22},
+      { name: 'Rotherham', position: 21},
+      { name: 'Sheff United', position: 3},
+      { name: 'Sheff Wednesday', position: 16},
+	  { name: 'Stoke', position: 15},
+      { name: 'Swansea', position: 13},
+	  { name: 'West Brom', position: 4},
+	  { name: 'Wigan', position: 19},
   ];
   
   function definehome()
@@ -68,6 +95,21 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
    }
    homeposition = premteamdata.find(homeposition => homeposition.name === home); //this takes the name and adds the position (and later other things)
    awayposition = premteamdata.find(awayposition => awayposition.name === away);
+   if (homeposition == null || awayposition == null)
+   {
+	  homeposition = champteamdata.find(homeposition => homeposition.name === home);
+	  awayposition = champteamdata.find(awayposition => awayposition.name === away);
+	  if (homeposition == null || awayposition == null)
+	  {
+		alert("I don't recognise the teams. Check your spelling?");
+		return false;
+	  }
+	  var homerank = homeposition.position;
+      var awayrank = awayposition.position;
+      console.log(homeposition);
+      console.log(awayposition);
+      return calculatechamp(homerank,awayrank);
+   }
    var homerank = homeposition.position;
    var awayrank = awayposition.position;
    console.log(homeposition);
@@ -84,6 +126,22 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
 	}
 	var homestrength = (((awayrank - homerank) + 20) / 4); //takes the position and compares it to the other team's position, this gives us the actual strength
 	var awaystrength = (((homerank - awayrank) + 20) / 4);
+	homestrength = Math.ceil(homestrength);
+	awaystrength = Math.ceil(awaystrength);
+	var homescore = randomise(homestrength);
+	var awayscore = randomise(awaystrength);
+	alert(homescore + " - " + awayscore);
+  }
+  
+   function calculatechamp(homerank,awayrank)
+  {
+    if (homerank <= 0 || awayrank <= 0 || homerank >= 24 || away >= 24)
+	{
+	  alert("This is impossible for a Premier League game!");
+      return false;
+	}
+	var homestrength = (((awayrank - homerank) + 24) / 5); //takes the position and compares it to the other team's position, this gives us the actual strength
+	var awaystrength = (((homerank - awayrank) + 24) / 5);
 	homestrength = Math.ceil(homestrength);
 	awaystrength = Math.ceil(awaystrength);
 	console.log(homestrength);
