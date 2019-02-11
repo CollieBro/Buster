@@ -44,32 +44,31 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
   ];
   const champteamdata =
   [
-	  { name: 'Aston Villa', position: 9},
+	  { name: 'Aston Villa', position: 10},
       { name: 'Birmingham', position: 8},
-      { name: 'Blackburn', position: 11},
+      { name: 'Blackburn', position: 13},
       { name: 'Bolton', position: 23},
-	  { name: 'Brentford', position: 17},
+	  { name: 'Brentford', position: 18},
       { name: 'Bristol City', position: 6},
       { name: 'Derby', position: 7},
-      { name: 'Hull', position: 10},
+      { name: 'Hull', position: 12},
       { name: 'Ipswich', position: 24},
       { name: 'Leeds', position: 2},
       { name: 'Middlesbrough', position: 5},
       { name: 'Millwall', position: 20},
 	  { name: 'Norwich', position: 1},
-      { name: 'Nottingham Forest', position: 12},
-      { name: 'Preston', position: 18},
-      { name: 'QPR', position: 14},
+      { name: 'Nottingham Forest', position: 9},
+      { name: 'Preston', position: 14},
+      { name: 'QPR', position: 15},
       { name: 'Reading', position: 22},
       { name: 'Rotherham', position: 21},
       { name: 'Sheff United', position: 3},
       { name: 'Sheff Wednesday', position: 16},
-	  { name: 'Stoke', position: 15},
-      { name: 'Swansea', position: 13},
+	  { name: 'Stoke', position: 17},
+      { name: 'Swansea', position: 11},
 	  { name: 'West Brom', position: 4},
 	  { name: 'Wigan', position: 19},
   ];
-  
   function definehome()
   {
     home = document.getElementById("hometeam").value;
@@ -119,7 +118,7 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
   
   function calculateprem(homerank,awayrank)
   {
-    if (homerank <= 0 || awayrank <= 0 || homerank >= 20 || away >= 20)
+    if (homerank <= 0 || awayrank <= 0 || homerank >= 21 || awayrank	>= 21)
 	{
 	  alert("This is impossible for a Premier League game!");
       return false;
@@ -135,9 +134,9 @@ Who is the away team? <input type="text" class="team" autocomplete="off" onchang
   
    function calculatechamp(homerank,awayrank)
   {
-    if (homerank <= 0 || awayrank <= 0 || homerank >= 24 || away >= 24)
+    if (homerank <= 0 || awayrank <= 0 || homerank >= 25 || awayteam >= 25)
 	{
-	  alert("This is impossible for a Premier League game!");
+	  alert("This is impossible for a Championship game!");
       return false;
 	}
 	var homestrength = (((awayrank - homerank) + 24) / 5); //takes the position and compares it to the other team's position, this gives us the actual strength
@@ -186,7 +185,7 @@ switch(teamstrength){
     case 8 : var probability = [0.23,0.21,0.24,0.18,0.08, 0.03, 0.015, 0.01,  0.005]; break;
     case 9 : var probability = [0.16,0.2, 0.25,0.22,0.11, 0.03, 0.015, 0.01,  0.005]; break;
     case 10 : var probability = [0.1,0.17,0.22,0.25,0.18, 0.04, 0.025, 0.01,  0.005]; break;
-    default : // teamstrength was not 1-10
+    default : // teamstrength was not 1-10, for whatever reason
 }
 var outgoingscore = getRandomItem(goals, probability);
  
